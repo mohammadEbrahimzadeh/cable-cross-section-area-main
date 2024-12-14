@@ -1,4 +1,4 @@
-const modalContent = document.querySelector(".modal-content");
+let modalContent = document.querySelector(".modal-content");
 
 // تابع برای نمایش ورودی دستی یا انتخاب از لیست کشویی
 function toggleManualInput(selectElement, manualInputDiv, inputId) {
@@ -121,7 +121,13 @@ function calculateCableCrossSection() {
 
 function displayResults() {
   let inputValues = getInputValues();
-  let CableCrossSection = calculateCableCrossSection();
+  let calculateCable = calculateCableCrossSection();
+  function truncateToTwoDecimals(num) {
+    return Math.floor(num * 100) / 100;
+  }
+
+  let CableCrossSection = truncateToTwoDecimals(calculateCable);
+
   function convertToPersianArray(obj, persianNames) {
     let result = {};
 
@@ -162,9 +168,12 @@ function displayResults() {
     for (const key in result) {
       let titleFa = result[key][0].fa;
       let value = result[key][0].value;
+
       modalContent.insertAdjacentHTML(
         "beforeend",
-        `        <div class="mt-3">
+        `   
+      
+        <div class="mt-3">
                     <div
                       class="d-flex flex-column gap-1 align-items-center justify-content-end"
                     >
@@ -179,8 +188,14 @@ function displayResults() {
       );
     }
     modalContent.insertAdjacentHTML(
+      "afterbegin",
+      `    <div class="col-12 p-1 bg-primary text-white text-center">
+                  <h4 class="text-center">نتیجه</h4>
+                </div>`
+    );
+    modalContent.insertAdjacentHTML(
       "beforeend",
-      `
+      ` 
        <div class="mt-3">
                     <div
                       class="d-flex flex-column gap-1 align-items-center justify-content-end"
@@ -193,12 +208,32 @@ function displayResults() {
                       </div>
                     </div>
                   </div>
+                          <div
+                  class="col-12 d-flex align-items-center justify-content-end"
+                >
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-secondary col-12 mt-3 bg-danger"
+                      data-dismiss="modal"
+                    >
+                      بستن
+                    </button>
+                  </div>
+                </div>
       `
     );
   } else {
     modalContent.insertAdjacentHTML(
       "beforeend",
-      `  <div
+
+      ` 
+    
+      </div>
+             <div class="col-12 p-1 bg-primary text-white text-center">
+                  <h4 class="text-center">نتیجه</h4>
+                </div>
+       <div
                   class="col-12 mt-3 d-flex justify-content-center align-content-center"
                 >
                   <div
@@ -206,7 +241,21 @@ function displayResults() {
                   >
                     <h6 class="p-0">لطفا مقادیر صحیح را وارد نمایید</h6>
                   </div>
-                </div>`
+                </div>
+                      <div
+                  class="col-12 d-flex align-items-center justify-content-end"
+                >
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-secondary col-12 mt-3 bg-danger"
+                      data-dismiss="modal"
+                    >
+                      بستن
+                    </button>
+                  </div>
+                </div>
+`
     );
   }
 }
@@ -214,6 +263,6 @@ function displayResults() {
 document
   .getElementById("calculateBtn")
   .addEventListener("click", function (event) {
-    event.preventDefault();
+    modalContent.innerHTML = "";
     displayResults();
   });
