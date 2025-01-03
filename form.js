@@ -413,9 +413,7 @@ function displayResults() {
                       </div>
                     </div>
                   </div>
-           <div class="col-12 bg-danger">
-          <img src="table.jpg" alt="" class="col-12 w-100" />
-        </div>
+      
                           <div
                   class="col-12 d-flex align-items-center justify-content-end"
                 >
